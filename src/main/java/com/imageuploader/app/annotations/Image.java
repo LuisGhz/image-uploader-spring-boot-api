@@ -26,10 +26,6 @@ public @interface Image {
         String imageSizeMessage = "File size exceeds the limit of 2MB";
 
         @Override
-        public void initialize(Image constraintAnnotation) {
-        }
-
-        // @Override
         public boolean isValid(MultipartFile image, ConstraintValidatorContext context) {
             if (image == null) {
                 context.disableDefaultConstraintViolation();
