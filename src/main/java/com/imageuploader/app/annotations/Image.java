@@ -57,6 +57,7 @@ public @interface Image {
             return file.isEmpty();
         }
 
+        @SuppressWarnings("null")
         private boolean isValidImageType(MultipartFile file) {
             return file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png")
                     || file.getContentType().equals("image/gif");
