@@ -26,7 +26,6 @@ import com.imageuploader.app.annotations.Image;
 import com.imageuploader.app.services.ImageService;
 import com.imageuploader.app.web.APIResponse;
 
-
 @RestController
 @RequestMapping("/api/v1/image")
 @Validated
@@ -62,8 +61,9 @@ public class ImageUploaderController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String handleConstraintViolationException(ConstraintViolationException e) {
-        log.info(e.getLocalizedMessage());
-        return "Validation error: " + e.getMessage();
+    ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
+        APIResponse response = APIResponse.builder().message("Validation error").isSuccessful(false)
+                .httpStatus(HttpStatus.BAD_REQUEST).data(e.getMessage()).build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
