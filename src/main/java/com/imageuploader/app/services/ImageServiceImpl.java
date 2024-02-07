@@ -47,6 +47,7 @@ public class ImageServiceImpl implements ImageService {
         return fileName;
     }
 
+    @SuppressWarnings("null")
     private String generateFileName(MultipartFile multiPart) {
         return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
     }
