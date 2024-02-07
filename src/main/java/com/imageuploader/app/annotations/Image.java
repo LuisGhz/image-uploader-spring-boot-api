@@ -21,15 +21,16 @@ public @interface Image {
 
     public class ImageValidator implements ConstraintValidator<Image, MultipartFile> {
 
-        String imageEmptyMessage = "File is empty";
-        String imageTypeMessage = "File type is not supported";
-        String imageSizeMessage = "File size exceeds the limit of 2MB";
+        String nullMessage = "Image is required";
+        String emptyMessage = "Image is empty";
+        String typeMessage = "Image type is not supported";
+        String sizeMessage = "Image size exceeds the limit of 2MB";
 
         @Override
         public boolean isValid(MultipartFile image, ConstraintValidatorContext context) {
             if (image == null) {
                 context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate("File is required").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(this.nullMessage).addConstraintViolation();
                 return false;
             }
 
@@ -40,15 +41,15 @@ public @interface Image {
 
             if (!isNotEmpty) {
                 context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate(imageEmptyMessage).addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(emptyMessage).addConstraintViolation();
             }
             if (!isValidImageType) {
                 context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate(imageTypeMessage).addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(typeMessage).addConstraintViolation();
             }
             if (!isValidImageSize) {
                 context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate(imageSizeMessage).addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(sizeMessage).addConstraintViolation();
             }
             return isValid;
         }
