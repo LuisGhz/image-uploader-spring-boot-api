@@ -58,7 +58,7 @@ public @interface Image {
             return file.isEmpty();
         }
 
-        @SuppressWarnings("null")
+        @SuppressWarnings("null") // Null checking is done in the isValid method
         private boolean isValidImageType(MultipartFile file) {
             return file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png")
                     || file.getContentType().equals("image/gif");
