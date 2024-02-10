@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -34,14 +35,18 @@ public class ImageUploaderController {
     private final Logger log = LoggerFactory.getLogger(ImageUploaderController.class);
     private final ImageService imageService;
 
+    @Value("${aws.publicUrl}")
+    private String publicUrl;
+
     @PostMapping()
     public ResponseEntity<?> uploadImage(
             @Image @RequestParam(name = "image", required = false) MultipartFile image) {
         try {
             String fileName = this.imageService.uploadImage(image);
-            APIResponse response = APIResponse.builder().message("Image uploaded!").isSuccessful(true)
-                    .httpStatus(HttpStatus.OK).data(fileName).build();
+            final String fileUrl = publicUrl + fileName;
             this.LogImageUploaded(image.getOriginalFilename(), fileName);
+            APIResponse response = APIResponse.builder().message("Image uploaded!").isSuccessful(true)
+                    .httpStatus(HttpStatus.OK).data(fileUrl).build();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error uploading image", e);
