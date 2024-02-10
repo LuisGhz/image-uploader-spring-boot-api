@@ -23,9 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
-// @WebMvcTest(controllers = ImageUploaderController.class)
 @AutoConfigureMockMvc
-// @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
 public class ImageUploaderControllerTest {
     @Autowired
