@@ -25,6 +25,9 @@ public class ImageServiceImpl implements ImageService {
     @Value("${aws.bucketName}")
     private String bucketName;
 
+    @Value("${aws.path}")
+    private String path;
+
     private final AmazonS3 s3Client;
 
     @Override
@@ -34,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(image.getBytes());
-            fileName = generateFileName(image);
+            fileName = path + "/" + generateFileName(image);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName, file);
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(image.getContentType());
